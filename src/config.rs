@@ -2,9 +2,7 @@ use anyhow::Ok;
 use log::{info, warn};
 use serde::Deserialize;
 use std::{
-    fs::{self, File},
-    io::Write,
-    path::Path,
+    env, fs::{self, File}, io::Write, path::Path
 };
 
 #[derive(Debug, Clone, Deserialize)]
@@ -36,8 +34,7 @@ pub struct DbConfig {
 impl Config {
     /// Parse configuration file.
     pub fn parse(path: &str) -> anyhow::Result<Self> {
-        let config_str = fs::read_to_string(path)?;
-
+        let config_str = fs::read_to_string(format!("{}/{}", env::current_dir().unwrap().to_str().unwrap(), path))?;
         let config = toml::from_str(&config_str)?;
 
         Ok(config)

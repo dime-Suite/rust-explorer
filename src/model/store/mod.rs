@@ -1,4 +1,6 @@
-use super::error::Error;
+pub mod error;
+
+// use super::
 use anyhow::Ok;
 use log::info;
 use sqlx::postgres::PgPoolOptions;
@@ -34,6 +36,5 @@ impl Database {
         Ok(connection_pool)
     }
 
-    //TODO: get orders
     //TODO: triggers
 }
