@@ -33,7 +33,6 @@ sqlx = { version = "0.7.3", features = ["runtime-tokio-rustls", "postgres", "big
 bigdecimal = { version = "0.3", features = ["serde"]}
 sea-query = {version = "0.30", features = ["attr"]}
 sea-query-binder = { version = "0.5", features = ["sqlx-postgres", "with-uuid", "with-time"] }
-modql = { version = "0.3", features = ["with-sea-query"]}
 
 # -- Json
 serde = { version = "1", features = ["derive"] }
