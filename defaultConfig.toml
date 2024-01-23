@@ -1,0 +1,11 @@
+[http]
+host = "0.0.0.0"
+port = 8080
+
+[logger]
+enable_level = "rust_cat_explorer"
+
+[db]
+is_sqlite = false
+db_uri = "test.db"
+max_connections = 10
