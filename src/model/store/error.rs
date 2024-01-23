@@ -1,6 +1,7 @@
+use serde::Serialize;
 use thiserror::Error;
 
-#[derive(Debug, Error, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Error, PartialEq, Eq, PartialOrd, Ord, Serialize)]
 pub enum Error {
     #[error("User not found")]
     OrderNotFound,
