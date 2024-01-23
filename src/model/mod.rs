@@ -1,7 +1,6 @@
-mod store;
-pub mod orderbook;
-mod base;
 mod error;
+pub mod orderbook;
+mod store;
 
 use anyhow::Result;
 use sqlx::{Pool, Postgres};
@@ -11,17 +10,17 @@ use crate::model::store::Database;
 
 #[derive(Clone)]
 pub struct ModelManager {
-	db: Database,
+    db: Database,
 }
 
 impl ModelManager {
-	pub async fn new(max_connections: u32, db_uri: &str) -> Result<Self> {
-		let db = Database::open(max_connections, db_uri).await?;
+    pub async fn new(max_connections: u32, db_uri: &str) -> Result<Self> {
+        let db = Database::open(max_connections, db_uri).await?;
 
-		Ok(ModelManager { db })
-	}
+        Ok(ModelManager { db })
+    }
 
-	pub(in crate::model) fn db(&self) -> &Pool<Postgres> {
-		&self.db.pool
-	}
+    pub(in crate::model) fn db(&self) -> &Pool<Postgres> {
+        &self.db.pool
+    }
 }

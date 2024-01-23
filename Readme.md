@@ -8,8 +8,8 @@ cargo watch -q -c -w src/ -x "cargo run"
 ## TODO
 
 - [ ] Get Order
-    - [ ] search by txHash 
     - [ ] search by OrderId 
+    - [ ] search by txHash 
     - [ ] search by maker/taker 
 - [ ] Get Orders
     - search by timeFrame

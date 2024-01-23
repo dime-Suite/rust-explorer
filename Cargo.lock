@@ -1150,30 +1150,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "modql"
-version = "0.3.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4e11b6e855a7e9db9754c76be8314577722c7160ab154a34a9751d0ff7e2c42d"
-dependencies = [
- "modql-macros",
- "sea-query",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "modql-macros"
-version = "0.3.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b5c8d1cdc8dd20adf9e6a60b7b87fc23b46d3e4de03ff91bf8522a8469b9bd4"
-dependencies = [
- "proc-macro2",
- "quote",
- "sea-query",
- "syn 2.0.48",
-]
-
-[[package]]
 name = "nix"
 version = "0.27.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1525,7 +1501,6 @@ dependencies = [
  "derive_more",
  "env_logger",
  "log",
- "modql",
  "sea-query",
  "sea-query-binder",
  "serde",

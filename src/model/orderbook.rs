@@ -2,14 +2,17 @@
 
 use anyhow::Result;
 // use modql::field::{HasFields, Fields};
+use crate::model::error::Error;
+use sea_query::{enum_def, Expr, Iden, Mode, PostgresQueryBuilder, Query, Value};
 use sea_query_binder::SqlxBinder;
 use serde::{Deserialize, Serialize};
-use sqlx::{postgres::PgRow, prelude::FromRow, types::{time::OffsetDateTime, BigDecimal}};
-use sea_query::{enum_def, Expr, Iden, Mode, PostgresQueryBuilder, Query, Value};
-use crate::model::error::Error;
-use crate::model::base;
+use sqlx::{
+    postgres::PgRow,
+    prelude::FromRow,
+    types::{time::OffsetDateTime, BigDecimal},
+};
 
-use super::{base::{CommonIden, DBBmc}, ModelManager};
+use super::ModelManager;
 
 #[derive(Debug, Serialize, Deserialize, FromRow)]
 pub struct AtomicSwap {
@@ -64,10 +67,10 @@ impl Orders {
 
         let mut query = Query::select();
         query.columns([
-            OrdersIden::Id, 
-            OrdersIden::CreatedAt, 
-            OrdersIden::UpdatedAt, 
-            OrdersIden::DeletedAt, 
+            OrdersIden::Id,
+            OrdersIden::CreatedAt,
+            OrdersIden::UpdatedAt,
+            OrdersIden::DeletedAt,
             OrdersIden::Maker,
             OrdersIden::Taker,
             OrdersIden::OrderPair,
@@ -81,8 +84,8 @@ impl Orders {
             OrdersIden::UserBtcWalletAddress,
             OrdersIden::RandomMultiplier,
             OrdersIden::RandomScore,
-            OrdersIden::Fee 
-            ]);
+            OrdersIden::Fee,
+        ]);
         query.from(OrdersIden::Table);
 
         let table_name = OrdersIden::Table.to_string();

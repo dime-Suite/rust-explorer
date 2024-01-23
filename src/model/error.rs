@@ -1,6 +1,6 @@
+use derive_more::From;
 use serde::Serialize;
 use serde_with::{serde_as, DisplayFromStr};
-use derive_more::From;
 
 use super::store;
 
@@ -11,27 +11,21 @@ pub enum Error {
         entity: String,
         id: i64,
     },
-    
+
     #[from]
     Store(store::error::Error),
-    
+
     #[from]
     SeaQuery(#[serde_as(as = "DisplayFromStr")] sea_query::error::Error),
 
     #[from]
     Sqlx(#[serde_as(as = "DisplayFromStr")] sqlx::Error),
-
-    #[from]
-    ModqlIntSea(#[serde_as(as = "DisplayFromStr")] modql::filter::IntoSeaError),
 }
 
 impl core::fmt::Display for Error {
-	fn fmt(
-		&self,
-		fmt: &mut core::fmt::Formatter,
-	) -> core::result::Result<(), core::fmt::Error> {
-		write!(fmt, "{self:?}")
-	}
+    fn fmt(&self, fmt: &mut core::fmt::Formatter) -> core::result::Result<(), core::fmt::Error> {
+        write!(fmt, "{self:?}")
+    }
 }
 
 impl std::error::Error for Error {}
