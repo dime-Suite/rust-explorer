@@ -1,11 +1,19 @@
 use std::{panic, thread};
 
 use log::error;
+use tower_http::{
+    classify::{ServerErrorsAsFailures, SharedClassifier},
+    trace::{self, TraceLayer},
+};
+use tracing::Level;
 
 // TODO file based logging
 pub fn init(level: &str) {
     std::env::set_var("RUST_LOG", level);
-    env_logger::init();
+    tracing_subscriber::fmt()
+        .with_target(false)
+        .compact()
+        .init();
 
     // catch panic and log them using tracing instead of default output to StdErr
     panic::set_hook(Box::new(|info| {
@@ -67,4 +75,10 @@ pub fn init(level: &str) {
             }
         }
     }));
+}
+
+pub fn request_response_logger() -> TraceLayer<SharedClassifier<ServerErrorsAsFailures>> {
+    TraceLayer::new_for_http()
+        .make_span_with(trace::DefaultMakeSpan::new().level(Level::INFO))
+        .on_response(trace::DefaultOnResponse::new().level(Level::INFO))
 }

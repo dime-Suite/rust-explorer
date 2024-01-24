@@ -40,9 +40,13 @@ async fn main() -> Result<()> {
 
     info!("Database connection established.");
 
-    let routes = Router::new().merge(orderbook::routes(mm));
+    let routes = Router::new()
+        .merge(orderbook::routes(mm))
+        .layer(logger::request_response_logger());
 
-    let listener = TcpListener::bind("127.0.0.1:8080").await.unwrap();
+    let listener = TcpListener::bind(format!("{}:{}", config.http.host, config.http.port))
+        .await
+        .expect("Failed to bind");
 
     axum::serve(listener, routes.into_make_service())
         .await

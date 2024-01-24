@@ -3,11 +3,10 @@
 use anyhow::Result;
 // use modql::field::{HasFields, Fields};
 use crate::model::error::Error;
-use sea_query::{enum_def, Expr, Iden, Mode, PostgresQueryBuilder, Query, Value};
+use sea_query::{enum_def, Iden, PostgresQueryBuilder, Query};
 use sea_query_binder::SqlxBinder;
 use serde::{Deserialize, Serialize};
 use sqlx::{
-    postgres::PgRow,
     prelude::FromRow,
     types::{time::OffsetDateTime, BigDecimal},
 };
@@ -62,7 +61,7 @@ pub struct Orders {
 }
 
 impl Orders {
-    pub async fn get(mm: &ModelManager, id: i64) -> Result<Orders> {
+    pub async fn getOrderById(mm: &ModelManager, id: i64) -> Result<Orders> {
         let db = mm.db();
 
         let mut query = Query::select();
@@ -90,9 +89,7 @@ impl Orders {
 
         let table_name = OrdersIden::Table.to_string();
         let (sql, values) = query.build_sqlx(PostgresQueryBuilder);
-        println!("sql: {}", sql);
-        println!("values: {:?}", values);
-        let mut entity = sqlx::query_as_with::<_, Orders, _>(&sql, values)
+        let entity = sqlx::query_as_with::<_, Orders, _>(&sql, values)
             .fetch_optional(db)
             .await?
             .ok_or(Error::EntityNotFound {

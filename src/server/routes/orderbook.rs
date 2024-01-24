@@ -1,4 +1,3 @@
-use anyhow::{Ok, Result};
 use axum::{extract::State, Json, Router};
 use serde_json::{json, Value};
 
@@ -11,7 +10,7 @@ pub fn routes(mm: ModelManager) -> Router {
 }
 
 async fn get_all_orders(State(mm): State<ModelManager>) -> Json<Value> {
-    let order = Orders::get(&mm, 1).await;
+    let order = Orders::getOrderById(&mm, 1).await;
 
     Json(json!(order.unwrap()))
 }

@@ -21,18 +21,14 @@ impl Database {
                 .connect(db_uri)
                 .await
                 .map_err(|err| {
-                    anyhow::anyhow!("Failed to open connection with database: {}", err)
-                    // Error::ConnectDatabase(format!(
-                    //     "Failed to open connection with database: {}",
-                    //     err
-                    // ))
+                    error::Error::ConnectDatabase(format!(
+                        "Failed to open connection with database: {}",
+                        err
+                    ))
                 })?,
         };
 
         info!("Database connection established.");
-        match connection_pool {
-            _ => {}
-        }
         Ok(connection_pool)
     }
 
